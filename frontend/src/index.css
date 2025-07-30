@@ -1,0 +1,41 @@
+/* general */
+@font-face{
+    font-family: Montserrat-r;
+    src: url("../src/assets/fonts/Montserrat-Regular.ttf");
+}
+
+@font-face{
+    font-family: Montserrat-b;
+    src: url("../src/assets/fonts/Montserrat-Bold.ttf");
+}
+
+@import "tailwindcss";
+
+@theme{
+    --font-montserrat-reg: Montserrat-r, "sans-serif";
+    --font-montserrat-bold: Montserrat-b, "sans-serif";
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* app blurred gradient background, designed in https://csshero.org */
+body {
+  background-attachment: fixed;
+  background-size: cover;
+background-color: hsla(265, 34%, 85%, 1);
+background-repeat: no-repeat;
+background-image:
+radial-gradient(at 13% 18%, hsla(224, 91%, 60%, 1) 0px, transparent 50%),
+radial-gradient(at 5% 27%, hsla(256, 76%, 72%, 1) 0px, transparent 50%),
+radial-gradient(at 1% 90%, hsla(216, 77%, 67%, 1) 0px, transparent 50%),
+radial-gradient(at 57% 9%, hsla(193, 71%, 65%, 1) 0px, transparent 50%),
+radial-gradient(at 79% 12%, hsla(283, 77%, 70%, 1) 0px, transparent 50%),
+radial-gradient(at 64% 99%, hsla(351, 80%, 70%, 1) 0px, transparent 50%),
+radial-gradient(at 90% 98%, hsla(189, 77%, 58%, 1) 0px, transparent 50%);
+}
