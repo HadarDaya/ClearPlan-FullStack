@@ -1,4 +1,5 @@
 /// <summary>
+/// Implementation of the interface: <see cref="IProjectService"/>.
 /// This service handles project-related operations.
 /// Supports:
 /// - Creating a new project
@@ -9,10 +10,11 @@
 using Microsoft.EntityFrameworkCore;
 using WebApiProject.Api.Data;
 using WebApiProject.Api.Models;
+using WebApiProject.Api.Interfaces;
 
 namespace WebApiProject.Api.Services
 {
-    public class ProjectService
+    public class ProjectService : IProjectService
     {
         private readonly AppDbContext _context;
 
@@ -24,6 +26,7 @@ namespace WebApiProject.Api.Services
 
         /// <summary>
         /// The function creates a new project.
+        /// Assumes that model validation was done prior to the call.
         /// </summary>
         /// <param name="dto">Object containing details for the new project.</param>
         /// <returns>The created project as a response DTO.</returns>

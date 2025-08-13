@@ -17,6 +17,7 @@ import { validateAddTaskForms } from "../../utils/validation/validateTaskForms";
 
 import type { Project, Task } from "../../utils/helpers/typesHelper";
 
+// Defines the props for the TaskRow component
 interface TaskRowProps {
   project: Project;
   task: Task;
@@ -58,6 +59,7 @@ export default function TaskRow(props: TaskRowProps) {
  * Requests task deletion via parent handler.
  */
   const handleDeleteClick = () => {
+    // inform parent
     onRequestDelete(task.id);
   };
 
@@ -94,8 +96,10 @@ export default function TaskRow(props: TaskRowProps) {
       if (!res.ok) throw new Error("Failed to update task");
 
       const updated = await res.json();
-      onUpdate(updated);
+      // inform parent that the operation was successful
+      onUpdate(updated); 
       setIsEditing(false);
+      // inform parent 
       onRequestAlert();
     } catch (err: any) {
       alert("Error saving task: " + err.message);
@@ -121,12 +125,14 @@ export default function TaskRow(props: TaskRowProps) {
   // ============================
   return (
     <tr className="even:bg-white odd:bg-gray-50 hover:bg-blue-50">
+      {/* delete */}
       <th className="text-center">
         <button className="text-blue-400 cursor-pointer" onClick={handleDeleteClick}>
           <X className="w-5 h-5" />
         </button>
       </th>
 
+      {/* title */}
       <td className="p-3">
         {isEditing ? (
           <div className="flex flex-col">
@@ -143,7 +149,7 @@ export default function TaskRow(props: TaskRowProps) {
             )}
           </div>
         ) : (
-          <p className={`whitespace-pre-wrap ${!titleExpanded ? "line-clamp-2 overflow-hidden" : ""}`}>
+          <p className={`${!titleExpanded ? "line-clamp-2 overflow-hidden" : ""}`}>
             {displayedTitle}
             {isLong && !titleExpanded && (
               <button
@@ -164,7 +170,7 @@ export default function TaskRow(props: TaskRowProps) {
           </p>
         )}
       </td>
-
+      {/* due date */}
       <td className="p-1 text-center whitespace-nowrap">
         {isEditing ? (
           <div className="inline-block w-[140px]">
@@ -186,7 +192,7 @@ export default function TaskRow(props: TaskRowProps) {
           "-"
         )}
       </td>
-
+      {/* status */}
       <td className="p-2 w-32 text-center">
         {isEditing ? (
           <button
@@ -210,7 +216,7 @@ export default function TaskRow(props: TaskRowProps) {
           </div>
         )}
       </td>
-
+      {/* modify */}
       <td className="p-3 w-20 text-center">
         {isEditing ? (
           <div className="flex justify-center gap-2">

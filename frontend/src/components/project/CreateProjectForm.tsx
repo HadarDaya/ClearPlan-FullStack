@@ -8,6 +8,7 @@ import { Loader2 } from "lucide-react";
 import type { FormErrors } from "../../utils/validation/validateCreateProjectForm";
 import { validateCreateProjectForm } from "../../utils/validation/validateCreateProjectForm";
 
+// Props definition for CreateProjectForm
 interface CreateProjectFormProps {
   onAdded: () => void;
   onCancel: () => void;

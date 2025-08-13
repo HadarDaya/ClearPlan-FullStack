@@ -19,8 +19,10 @@ export default function CustomDialog({
   onConfirm,
   onCancel,
 }: CustomDialogProps) {
+  // Do not render anything if the dialog is closed
   if (!isOpen) return null;
 
+  // Map dialog type to its corresponding icon
   const iconMap = {
     success: <CheckCircle className="w-8 h-8 text-green-600" />,
     error: <XCircle className="w-8 h-8 text-red-600" />,
@@ -29,12 +31,16 @@ export default function CustomDialog({
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+      {/* Dialog box */}
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 space-y-4">
+        {/* Header with icon and title */}
         <div className="flex items-center gap-4">
           {iconMap[type]}
           <h2 className="text-xl font-semibold">{title}</h2>
         </div>
+        {/* Message content */}
         <p className="text-gray-700">{message}</p>
+         {/* Buttons based on mode */}
         <div className="flex justify-end gap-4 mt-6">
           {mode === "confirm" && (
             <>

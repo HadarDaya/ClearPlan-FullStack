@@ -1,4 +1,5 @@
 /// <summary>
+/// Implementation of the interface: <see cref="ITaskService"/>.
 /// This service handles task-related operations.
 /// Supports:
 /// - Adding a task to project
@@ -8,10 +9,11 @@
 using Microsoft.EntityFrameworkCore;
 using WebApiProject.Api.Data;
 using WebApiProject.Api.Models;
+using WebApiProject.Api.Interfaces;
 
 namespace WebApiProject.Api.Services
 {
-    public class TaskService 
+    public class TaskService  : ITaskService
     {
         private readonly AppDbContext _context;
 

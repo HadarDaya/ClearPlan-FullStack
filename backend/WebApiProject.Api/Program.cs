@@ -3,7 +3,7 @@
  * 
  * Key configurations:
  * - Entity Framework Core with SQLite database
- * - Dependency injection for services (AuthService, ProjectService, TaskService)
+ * - Dependency injection for services  by their interfaces (IAuthService, IProjectService, ITaskService)
  * - JWT Bearer Authentication using a secret key from appsettings.json
  * - CORS policy to allow requests from the frontend (configured in appsettings.json under "FrontendUrl")
  * - Swagger/OpenAPI documentation for development
@@ -20,6 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebApiProject.Api.Data;
 using WebApiProject.Api.Services;
+using WebApiProject.Api.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,9 +29,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=app.db"));
 
 // Add Services
-builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<ProjectService>();
-builder.Services.AddScoped<TaskService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<ITaskService, TaskService>();
 
 // JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

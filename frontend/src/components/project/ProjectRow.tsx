@@ -8,6 +8,7 @@ import { useState } from "react";
 import { ListChecks, X } from "lucide-react";
 import type { Project } from "../../utils/helpers/typesHelper";
 
+// Defines the props for the ProjectRow component
 interface ProjectRowProps {
   project: Project;
   onRequestDelete: () => void;
@@ -40,6 +41,7 @@ export default function ProjectRow(props: ProjectRowProps) {
   // ============================
   return (
     <tr className="even:bg-white odd:bg-gray-50 hover:bg-blue-50">
+      {/* delete */}
       <td className="text-center">
         <button
           onClick={onRequestDelete}
@@ -53,8 +55,7 @@ export default function ProjectRow(props: ProjectRowProps) {
       {/* description (display limited amount of characters) */}
       <td className="p-3 ">
         <p
-          className={`whitespace-pre-wrap ${!expanded ? "line-clamp-2 overflow-hidden" : ""
-            }`}
+          className={`${!expanded ? "line-clamp-2 overflow-hidden" : ""}`}
         >
           {displayedText}
           {isLong && !expanded && (
@@ -75,9 +76,11 @@ export default function ProjectRow(props: ProjectRowProps) {
           )}
         </p>
       </td>
+      {/* creation date */}
       <td className="p-3 text-center">
         {new Date(project.creationDate).toLocaleDateString("en-GB")}
       </td>
+      {/* display tasks */}
       <td className="p-3 text-center whitespace-nowrap space-x-6">
         <button
           onClick={onViewTasks}

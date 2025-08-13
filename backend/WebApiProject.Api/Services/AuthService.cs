@@ -1,4 +1,5 @@
 /// <summary>
+/// Implementation of the interface: <see cref="IAuthService"/>.
 /// This service handles user authentication operations.
 /// Supports:
 /// - Registering new users
@@ -12,8 +13,9 @@ using Microsoft.IdentityModel.Tokens;
 using WebApiProject.Api.Models;
 using WebApiProject.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using WebApiProject.Api.Interfaces;
 
-public class AuthService
+public class AuthService : IAuthService
 {
     private readonly AppDbContext _context;
     private readonly IConfiguration _config;
@@ -37,7 +39,7 @@ public class AuthService
         if (await _context.Users.AnyAsync(u => u.UserName.ToLower() == dto.UserName.ToLower()))
             return new RegisterResult { Success = false, ErrorMessage = "Username is already taken." };
 
-        // Encrypt their password
+        // Hash the user's password using BCrypt
         var passwordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
 
         var user = new User
@@ -68,7 +70,7 @@ public class AuthService
         // check username
         var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName.ToLower() == dto.UserName.ToLower());
 
-        // encode the given password and compare to user's encoded password
+        // Verify the provided password by hashing and comparing it to the stored hash
         if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
             return new LoginResult { Success = false, ErrorMessage = "Invalid username or password." };
 
@@ -95,6 +97,8 @@ public class AuthService
 
         // Read the secret key from appsettings.json
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
+
+        // Sign on the token
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
 
         // Create the JWT token 

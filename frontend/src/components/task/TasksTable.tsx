@@ -3,6 +3,7 @@ import TaskRow from "./TaskRow";
 import CustomDialog from "../layout/CustomDialog";
 import type { Project, Task } from "../../utils/helpers/typesHelper";
 
+// Defines the props for the TasksTable component
 interface TasksTableProps {
   project: Project;
   tasks: Task[];
@@ -23,7 +24,8 @@ export default function TasksTable(props: TasksTableProps) {
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
 
   /**
- * Removes a task from the list after successful deletion.
+ * Removes a task from the list after successful deletion on the server.
+ * Updates the local UI by filtering out the deleted project by ID.
  * @param id Task ID to remove
 */
   const handleDelete = (id: number) => {
@@ -32,7 +34,7 @@ export default function TasksTable(props: TasksTableProps) {
 
   /**
  * Updates a task after successful modification.
- * @param id Task ID to remove
+ * @param id Task ID to modify
 */
   const handleUpdate = (updatedTask: Task) => {
     setTasks((prev) =>

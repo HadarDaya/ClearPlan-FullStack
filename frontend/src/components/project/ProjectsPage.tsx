@@ -29,6 +29,7 @@ export default function ProjectsPage() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false); // state of confirm dialog
 
+  // Fetches the user's projects from the server whenever userId changes.
   useEffect(() => {
     fetchProjects();
   }, [userId]);
@@ -95,6 +96,9 @@ export default function ProjectsPage() {
 
         {showAddForm && (
           <div id="add-project-form" className="mt-6">
+            {/* passes two callback props: 
+                1. onAdded: triggered after a successful project creation.
+                2. onCancel: triggered when the user cancels the form. */}
             <CreateProjectForm onAdded={onProjectAdded} onCancel={() => setShowAddForm(false)} />
           </div>
         )}
@@ -111,6 +115,7 @@ export default function ProjectsPage() {
       ) : projects.length === 0 ? (
         <p className="text-gray-600 text-center">You don't have any projects yet.</p>
       ) : (
+        // passes the current list of projects to display and a setter function to update the list.
         <ProjectsTable projects={projects} setProjects={setProjects} />
       )}
 

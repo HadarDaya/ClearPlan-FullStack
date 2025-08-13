@@ -4,10 +4,12 @@
 /// - Adding a task to project
 /// - Updating a task by its id
 /// - Deleting a task by its id
+/// Note: All input models are validated on the server, and invalid requests return 
+/// 400 Bad Request with validation error details.
 /// </summary>
 using Microsoft.AspNetCore.Mvc;
-using WebApiProject.Api.Services;
 using Microsoft.AspNetCore.Authorization;
+using WebApiProject.Api.Interfaces;
 
 namespace WebApiProject.Api.Controllers
 {
@@ -15,24 +17,33 @@ namespace WebApiProject.Api.Controllers
     [Route("api")]
     public class TasksController : ControllerBase
     {
-        private readonly TaskService _taskService;
+        private readonly ITaskService _taskService;
 
-        public TasksController(TaskService taskService)
+        public TasksController(ITaskService taskService)
         {
-            // Dependency injection
+            // Dependency injection using interface for loose coupling
             _taskService = taskService;
         }
 
         /// <summary>
         /// The function adds a new task to the given project.
+        /// Performs model validation on the provided <paramref name="dto"/> before processing.
         /// </summary>
         /// <param name="projectId">The id of the project.</param>
-        /// <param name="dto">Object containing details of a new task.</param>
-        /// <returns>200 OK with the created task, or 404 if the project was not found.</returns>
+        /// <param name="dto">Object containing details of a new task.
+        /// This input is validated according to data annotations.</param>
+        /// <returns>
+        /// 200 OK with the created task, or 
+        /// 404 if the project was not found, or
+        /// 400 Bad Request with validation errors if the input model is invalid.
+        /// </returns>
         [HttpPost("projects/{projectId}/tasks")]
         [Authorize] // ensure only authorized user can access this method 
         public async Task<IActionResult> AddTaskToProject(int projectId, AddTaskDto dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             int? userId = GetUserIdFromClaims();
             if (userId == null) return Unauthorized();
 
@@ -42,14 +53,23 @@ namespace WebApiProject.Api.Controllers
 
         /// <summary>
         /// The function updates an existing task identified by a given id.
+        /// Performs model validation on the provided <paramref name="dto"/> before processing.
         /// </summary>
         /// <param name="taskId">The id of the task to update.</param>
-        /// <param name="dto">Object containing updated task details.</param>
-        /// <returns>200 OK with the updated task, or 404 if the task was not found.</returns>
+        /// <param name="dto">Object containing updated task details.
+        /// This input is validated according to data annotations.</param>
+        /// <returns> 
+        /// 200 OK with the updated task, or 
+        /// 404 if the task was not found, or
+        /// 400 Bad Request with validation errors if the input model is invalid.
+        /// </returns>
         [HttpPut("tasks/{taskId}")]
         [Authorize] // ensure only authorized user can access this method 
         public async Task<IActionResult> UpdateTaskById(int taskId, UpdateTaskDto dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             int? userId = GetUserIdFromClaims();
             if (userId == null) return Unauthorized();
 

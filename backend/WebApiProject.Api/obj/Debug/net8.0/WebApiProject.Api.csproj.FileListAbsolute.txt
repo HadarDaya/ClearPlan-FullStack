@@ -166,3 +166,4 @@ C:\Users\hadar\mini-project-manager\backend\WebApiProject.Api\obj\Debug\net8.0\r
 C:\Users\hadar\mini-project-manager\backend\WebApiProject.Api\obj\Debug\net8.0\WebApiProject.Api.pdb
 C:\Users\hadar\mini-project-manager\backend\WebApiProject.Api\obj\Debug\net8.0\WebApiProject.Api.genruntimeconfig.cache
 C:\Users\hadar\mini-project-manager\backend\WebApiProject.Api\obj\Debug\net8.0\ref\WebApiProject.Api.dll
+C:\Users\hadar\mini-project-manager\backend\WebApiProject.Api\obj\Debug\net8.0\WebApiProject.Api.sourcelink.json

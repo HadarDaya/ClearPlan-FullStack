@@ -1,6 +1,7 @@
 /// <summary>
 /// Contains Data Transfer Objects (DTOs) used for project operations.
-/// (Allowing better control over what data is received from user, and is exposed to user).
+/// These DTOs include data annotations for server-side validation,
+/// allowing better control over what data is received from the user and exposed to the client.
 /// </summary>
 using System.ComponentModel.DataAnnotations;
 
@@ -12,11 +13,11 @@ namespace WebApiProject.Api
     /// </summary>
     public class CreateProjectDto
     {
-        [Required]
-        [StringLength(100, MinimumLength = 3)]
+        [Required(ErrorMessage = "Title is required")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "Title must be between 3 and 100 characters")]
         public string Title { get; set; } = string.Empty;
 
-        [StringLength(500)]
+        [StringLength(500, ErrorMessage = "Description cannot exceed 500 characters")]
         public string? Description { get; set; }
     }
 

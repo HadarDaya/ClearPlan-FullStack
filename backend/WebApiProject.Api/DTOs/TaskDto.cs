@@ -1,7 +1,9 @@
 /// <summary>
 /// Contains Data Transfer Objects (DTOs) used for task operations.
-/// (Allowing better control over what data is received from user, and is exposed to user).
+/// These DTOs include data annotations for server-side validation,
+/// allowing better control over what data is received from the user and exposed to the client.
 /// </summary>
+using System.ComponentModel.DataAnnotations; 
 namespace WebApiProject.Api
 {
     /// <summary>
@@ -10,6 +12,8 @@ namespace WebApiProject.Api
     /// </summary>
     public class AddTaskDto
     {
+        [Required(ErrorMessage = "Title is required")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "Title must be between 3 and 100 characters")]
         public string Title { get; set; } = string.Empty;
         public DateTime? DueDate { get; set; }
         public bool IsCompleted { get; set; }
@@ -21,6 +25,8 @@ namespace WebApiProject.Api
     /// </summary>
     public class UpdateTaskDto
     {
+        [Required(ErrorMessage = "Title is required")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "Title must be between 3 and 100 characters")]
         public string Title { get; set; } = string.Empty;
         public DateTime? DueDate { get; set; }
         public bool IsCompleted { get; set; }

@@ -13,6 +13,7 @@ import { getUserIdFromToken } from "../../utils/helpers/authHelper";
 import type { Project, Task } from "../../utils/helpers/typesHelper";
 import CustomDialog from "../layout/CustomDialog";
 
+// Defines the props for the TaskModal component
 interface TaskModalProps {
   project: Project;
   onClose: () => void;
@@ -121,8 +122,11 @@ export default function TaskModal(props: TaskModalProps) {
         {/* Add New Task form */}
         {showAddForm && (
           <div id="add-task-form" className="mt-6">
+            {/* passes two callback props: 
+                1. onAdded: triggered after a successful task addition.
+                2. onCancel: triggered when the user cancels the form. */}
             <AddTaskForm
-              project={project}
+              project={project} // task will be added under this project
               onAdded={onTaskAdded}
               onCancel={() => setShowAddForm(false)}
             />

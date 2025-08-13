@@ -10,7 +10,7 @@ public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {}
 
-    public DbSet<User> Users => Set<User>(); // Create 'Users' table in db
-    public DbSet<Project> Projects => Set<Project>(); // Create 'Projects' table in db
-    public DbSet<TaskItem> Tasks => Set<TaskItem>(); // Create 'Tasks' table in db
+    public DbSet<User> Users => Set<User>(); // Represents the 'Users' table in the database
+    public DbSet<Project> Projects => Set<Project>(); // Represents the 'Projects' table in the database
+    public DbSet<TaskItem> Tasks => Set<TaskItem>(); // Represents the 'Tasks' table in the database
 }

@@ -9,6 +9,7 @@ import TaskModal from "../task/TasksModal";
 import CustomDialog from "../layout/CustomDialog";
 import type { Project } from "../../utils/helpers/typesHelper"
 
+// Defines the props for the ProjectsTable component
 interface ProjectsTableProps {
   projects: Project[];
   setProjects: React.Dispatch<React.SetStateAction<Project[]>>;
@@ -25,10 +26,14 @@ export default function ProjectsTable(props: ProjectsTableProps) {
   const { projects, setProjects } = props;
 
   const [selectedProject, setSelectedProject] = useState<Project | null>(null); // for TaskModal
+  /* Once project row asks for deletion, state projectToDelete will recieve a value.
+     As a result, customDialog will be opened (on mode confirmation),
+     and the row will be deleted only if user clicked on 'confirm'. */
   const [projectToDelete, setProjectToDelete] = useState<Project | null>(null); // for CustomDialog
 
   /**
-   * Removes a project from the list after successful deletion.
+   * Removes a project from the list after successful deletion on the server.
+   * Updates the local UI by filtering out the deleted project by ID.
    * @param id Project ID to remove
    */
   const handleDelete = (id: number) => {
@@ -78,10 +83,14 @@ export default function ProjectsTable(props: ProjectsTableProps) {
             </tr>
           </thead>
           <tbody>
+            { /* Iterates over the list of projects and renders a ProjectRow for each one. */} 
             {projects.map((project) => (
               <ProjectRow
                 key={project.id}
-                project={project}
+                project={project} // the project data to display
+                /* passes two callback props to handle user actions: 
+                  1. onRequestDelete: called when user clicks "Delete", sets the project to be deleted.
+                  2. onViewTasks: called when user clicks "View", sets the selected project for viewing its tasks */
                 onRequestDelete={() => setProjectToDelete(project)}
                 onViewTasks={() => setSelectedProject(project)}
               />
